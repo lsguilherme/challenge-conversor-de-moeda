@@ -3,10 +3,12 @@ import config.HttpService;
 import dto.ConversionDto;
 import model.Conversion;
 import model.enums.CurrencyCode;
+import service.LogService;
 
 import java.util.Scanner;
 
 import static service.ConversionService.*;
+import static service.LogService.logConversion;
 
 public class Main {
 
@@ -45,6 +47,8 @@ public class Main {
                 *********************************""");
             System.out.printf("- %.2f  %s = %.2f  %s. %n", amount, c.getBaseCode(), convertCurrency(amount, c.getConversionRate()), c.getTargetCode());
             System.out.println("- Última atualização: " + convertToBrasiliaTime(c.getLastUpdate()));
+
+            logConversion(amount, String.valueOf(c.getBaseCode()), convertCurrency(amount, c.getConversionRate()), String.valueOf(c.getTargetCode()), c.getConversionRate());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
