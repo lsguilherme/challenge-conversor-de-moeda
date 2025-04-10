@@ -12,7 +12,27 @@ public class HttpService {
             .connectTimeout(Duration.ofSeconds(10))
             .build();
 
-    public static String makeRequest(String uri) throws IOException, InterruptedException {
+    /**
+     * Método que retorna uma requisição
+     * @param baseCode
+     * @param targetCode
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public static String request(String baseCode, String targetCode) throws IOException, InterruptedException {
+        var key = System.getenv("KEY");
+        return HttpService.makeRequest("https://v6.exchangerate-api.com/v6/" + key + "/pair/" + baseCode + "/" + targetCode);
+    }
+
+    /**
+     * Criação do client e retorno do body
+     * @param uri
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    private static String makeRequest(String uri) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri))
                 .timeout(Duration.ofSeconds(30))
